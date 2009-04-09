@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
-<hibernate-mapping>
+<!-- Generated Apr 9, 2009 5:32:59 PM by Hibernate Tools 3.2.4.CR1 -->
+
+
+<!-- Test change -->
+
+
     <class name="com.inverse2.rendezvous.model.User" table="user" catalog="Rendezvous">
         <id name="userId" type="java.lang.Integer">
             <column name="userId" />

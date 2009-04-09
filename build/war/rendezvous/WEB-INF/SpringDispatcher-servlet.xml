@@ -45,7 +45,7 @@
     
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
-            <list>
+            <list> 
                 <value>messages</value>
             </list>
         </property>
@@ -55,6 +55,10 @@
     	<property name="signInPage" value="signin.htm"/>
     	<property name="applicationSecurityManager"><ref bean="applicationSecurityManager"/></property>
     </bean>																																
+    
+    
+    
+    
     
     <bean name="WelcomeController" class="com.inverse2.rendezvous.controller.SimpleGenericController">
         <property name="targetPage" value="welcome"/>
@@ -111,6 +115,9 @@
 		<property name="successView"  value="redirect:editfloor.htm"/>
     </bean>
 	<bean name="EditRoomValidator"   class="com.inverse2.rendezvous.validators.RoomValidator"/>
+    
+    
+    
     
     <bean id="applicationSecurityManager" class="com.inverse2.rendezvous.security.ApplicationSecurityManager"/>
     
