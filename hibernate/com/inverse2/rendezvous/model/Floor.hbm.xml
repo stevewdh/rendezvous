@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.Floor" table="floor" catalog="Rendezvous">
+        <id name="floorId" type="java.lang.Integer">
+            <column name="floorId" />
+
+            <generator class="identity" />
+        </id>
+
+        <property name="buildingId" type="java.lang.Integer">
+            <column name="buildingId" />
+        </property>
+
+        <property name="floorName" type="string">
+            <column name="floorName" length="45" />
+        </property>
+
+        <property name="displayOrder" type="java.lang.Integer">
+            <column name="displayOrder" />
+        </property>
+    </class>
+</hibernate-mapping>
+

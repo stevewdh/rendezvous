@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.Meetingresource" table="meetingresource" catalog="Rendezvous">
+        <id name="meetingResourceId" type="java.lang.Integer">
+            <column name="meetingResourceId" />
+
+            <generator class="identity" />
+        </id>
+
+        <property name="requestedRoomsId" type="java.lang.Integer">
+            <column name="requestedRoomsId" />
+        </property>
+
+        <property name="numberOfConsumables" type="java.lang.Integer">
+            <column name="numberOfConsumables" />
+        </property>
+
+        <property name="resourceComment" type="string">
+            <column name="resourceComment" length="256" />
+        </property>
+
+        <property name="resourceTypeCode" type="string">
+            <column name="resourceTypeCode" length="12" />
+        </property>
+    </class>
+</hibernate-mapping>
+

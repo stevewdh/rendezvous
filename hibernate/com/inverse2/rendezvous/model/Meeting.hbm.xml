@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.Meeting" table="meeting" catalog="Rendezvous">
+        <id name="meetingId" type="java.lang.Integer">
+            <column name="meetingId" />
+
+            <generator class="identity" />
+        </id>
+
+        <property name="requestedRoomsId" type="java.lang.Integer">
+            <column name="requestedRoomsId" />
+        </property>
+
+        <property name="roomId" type="java.lang.Integer">
+            <column name="roomId" />
+        </property>
+
+        <property name="meetingDate" type="date">
+            <column name="meetingDate" length="0" not-null="true" />
+        </property>
+
+        <property name="startTime" type="time">
+            <column name="startTime" length="0" not-null="true" />
+        </property>
+
+        <property name="endTime" type="time">
+            <column name="endTime" length="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
+

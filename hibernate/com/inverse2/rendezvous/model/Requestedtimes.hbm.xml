@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.Requestedtimes" table="requestedtimes" catalog="Rendezvous">
+        <id name="requestedTimesId" type="java.lang.Integer">
+            <column name="requestedTimesId" />
+
+            <generator class="identity" />
+        </id>
+
+        <property name="bookingId" type="java.lang.Integer">
+            <column name="bookingId" />
+        </property>
+
+        <property name="startDate" type="date">
+            <column name="startDate" length="0" />
+        </property>
+
+        <property name="endDate" type="date">
+            <column name="endDate" length="0" />
+        </property>
+
+        <property name="maximumOccurances" type="java.lang.Integer">
+            <column name="maximumOccurances" />
+        </property>
+
+        <property name="everyXdays" type="java.lang.Integer">
+            <column name="everyXDays" />
+        </property>
+
+        <property name="everyWeekday" type="java.lang.Boolean">
+            <column name="everyWeekday" />
+        </property>
+
+        <property name="everyXweeks" type="java.lang.Integer">
+            <column name="everyXWeeks" />
+        </property>
+
+        <property name="weekDaySelection" type="string">
+            <column name="weekDaySelection" length="7" />
+        </property>
+
+        <property name="dayOfMonth" type="java.lang.Integer">
+            <column name="dayOfMonth" />
+        </property>
+
+        <property name="everyXmonths" type="java.lang.Integer">
+            <column name="everyXMonths" />
+        </property>
+
+        <property name="the1stXofTheMonth" type="string">
+            <column name="the1stXofTheMonth" length="3" />
+        </property>
+
+        <property name="the2ndXofTheMonth" type="string">
+            <column name="the2ndXofTheMonth" length="3" />
+        </property>
+
+        <property name="the3rdXofTheMonth" type="string">
+            <column name="the3rdXofTheMonth" length="3" />
+        </property>
+
+        <property name="the4thXofTheMonth" type="string">
+            <column name="the4thXofTheMonth" length="3" />
+        </property>
+
+        <property name="theLastXofTheMonth" type="string">
+            <column name="theLastXofTheMonth" length="3" />
+        </property>
+
+        <property name="everyXmonth" type="string">
+            <column name="everyXMonth" length="3" />
+        </property>
+
+        <property name="startTime" type="time">
+            <column name="startTime" length="0" />
+        </property>
+
+        <property name="endTime" type="time">
+            <column name="endTime" length="0" />
+        </property>
+
+        <property name="meetingTitle" type="string">
+            <column name="meetingTitle" length="45" />
+        </property>
+
+        <property name="meetingDescription" type="string">
+            <column name="meetingDescription" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>
+

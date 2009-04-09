@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!-- Rendezvous ANT file... -->
+<project name="rendezvous" basedir="." default="build">
+
+	<!-- High level properties -->
+    <property name="appname" value="${ant.project.name}"/>
+    <property name="env"     value="development"/>
+    
+    <!-- Load properties file for this environment -->
+    <property file="${env}.properties"/>
+    
+    <!-- Properties -->
+    <property name="lib.dir"         value="lib"/>
+    <property name="util.jar.dir"    value="utiljar"/>
+    <property name="build.dir"       value="build"/>
+    <property name="class.dir"       value="${build.dir}/classes"/>
+    <property name="dist.dir"        value="dist"/>
+    <property name="src.dir"         value="src"/>
+    <property name="java.src.dir"    value="${src.dir}/java"/>
+    <property name="web.src.dir"     value="${src.dir}/web"/>
+    <property name="conf.dir"        value="${src.dir}/conf"/>
+    <property name="war.dir"         value="${build.dir}/war/${appname}"/>
+    <property name="warwebinf.dir"   value="${war.dir}/WEB-INF" />
+    <property name="warlib.dir"      value="${war.dir}/WEB-INF/lib" />
+    <property name="warclasses.dir"  value="${war.dir}/WEB-INF/classes" />
+    <property name="war.file"        value="${dist.dir}/${appname}.war"/>
+    <property name="sql.dir"         value="sql"/>
+    <property name="hib.dir"         value="hibernate"/>
+    <property name="model.package"   value="com.inverse2.rendezvous.model"/>
+    <property name="createDBscript"  value="rendezvousPDM.sql"/>
+    <property name="tomcat.mgr.url"  value="http://localhost:8080/manager"/>
+    <property name="tomcat.mgr.user" value="admin"/>
+    <property name="tomcat.mgr.pass" value="admin"/>
+    <property name="tomcat.app.path" value="/${appname}"/>
+    
+    <!-- Define the classpath... -->
+    <path id="master-classpath" description="Master CLASSPATH for this script">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${util.jar.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="${class.dir}"/>
+        <pathelement location="${conf.dir}"/>
+    </path>
+
+    <!-- Define a task for the Hibernate tools... -->
+    <taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpathref="master-classpath"/>
+    
+    <!-- Define tasks for Tomcat deployment... -->
+    <taskdef name="tomcatdeploy"   classname="org.apache.catalina.ant.DeployTask"   classpathref="master-classpath"/>
+    <taskdef name="tomcatreload"   classname="org.apache.catalina.ant.ReloadTask"   classpathref="master-classpath"/>
+    <taskdef name="tomcatstart"    classname="org.apache.catalina.ant.StartTask"    classpathref="master-classpath"/>
+    <taskdef name="tomcatstop"     classname="org.apache.catalina.ant.StopTask"     classpathref="master-classpath"/>
+    <taskdef name="tomcatundeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="master-classpath"/>
+    
+    <!-- BUILD TARGETS... -->
+    
+    <target name="init" description="Setup for build script">
+        <mkdir dir="${lib.dir}"/>
+        <mkdir dir="${util.jar.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${class.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${src.dir}"/>
+        <mkdir dir="${java.src.dir}"/>
+        <mkdir dir="${web.src.dir}"/>
+        <mkdir dir="${conf.dir}"/>
+        <mkdir dir="${war.dir}"/>
+        <mkdir dir="${warwebinf.dir}"/>
+        <mkdir dir="${warlib.dir}"/>
+        <mkdir dir="${sql.dir}"/>
+        <mkdir dir="${hib.dir}"/>
+    </target>
+
+    <target name="HibernateHBMGeneration" depends="init" description="Generate Hibernate *.hbm.xml files">
+    	<hibernatetool destdir="${hib.dir}">
+    		<!-- Taken out    configurationfile="${conf.dir}/hibernate.cfg.xml" -->
+            <jdbcconfiguration packagename="${model.package}" configurationfile="${conf.dir}/hibernate.cfg.xml"/>
+            <hbm2hbmxml/>
+        </hibernatetool>
+    </target>
+    
+    <target name="HibernatePOJOGeneration" depends="init" description="Generate Hibernate POJOs">
+    	<hibernatetool destdir="${java.src.dir}">
+    		<configuration >
+	    		<fileset dir="${java.src.dir}">
+			        <include name="**/*.hbm.xml"/>
+		        </fileset>
+            </configuration>
+            <hbm2java/>
+        </hibernatetool>
+    </target>
+	
+    <target name="CreateDatabase" description="Create the MySQL database">
+    	<exec executable="${mysql.bin.dir}/mysql" input="${sql.dir}/${createDBscript}">
+    		<arg value="-u"/>
+    		<arg value="${db.username}"/>
+    		<arg value="--password=${db.password}"/>
+    		<arg value="-v"/>
+    		<arg value="${mysql.db.name}"/>
+    	</exec>
+    </target>
+    
+    <target name="CreateLookupData" depends="CreateDatabase" description="Create lookup data in the MySQL database">
+    	<exec executable="${mysql.bin.dir}/mysql" input="${sql.dir}/createLookupData.sql">
+    		<arg value="-u"/>
+    		<arg value="${db.username}"/>
+    		<arg value="--password=${db.password}"/>
+    		<arg value="-v"/>
+    		<arg value="${mysql.db.name}"/>
+    	</exec>
+    </target>
+    
+    <target name="CreateTestData" depends="CreateLookupData" description="Create test data in the MySQL database">
+    	<exec executable="${mysql.bin.dir}/mysql" input="${sql.dir}/createTestData.sql">
+    		<arg value="-u"/>
+    		<arg value="${db.username}"/>
+    		<arg value="--password=${db.password}"/>
+    		<arg value="-v"/>
+    		<arg value="${mysql.db.name}"/>
+    	</exec>
+    </target>
+
+	<target name="RunTests" depends="compile" description="Run JUnit tests">
+	    <junit printsummary="on" fork="false" haltonfailure="false" failureproperty="tests.failed" showoutput="true">
+		    <classpath refid="master-classpath"/>
+	    	<formatter type="brief" usefile="false"/>
+	    	<batchtest>
+	    	    <fileset dir="${class.dir}">
+	    		    <include name="**/*Test.*"/>
+	    	    </fileset>
+	    	</batchtest>
+	    </junit>
+		<fail if="tests.failed">
+		            tests.failed=${tests.failed}
+		            ***********************************************************
+		            ***********************************************************
+		            ****  One or more tests failed!  Check the output ...  ****
+		            ***********************************************************
+		            ***********************************************************
+        </fail>
+	</target>
+	
+    <target name="compile" depends="init" description="Compile the Java classes">
+        <javac srcdir="${java.src.dir}" destdir="${class.dir}" debug="true" failonerror="true" classpathref="master-classpath" />
+        <copy todir="${class.dir}">
+            <fileset dir="${java.src.dir}">
+                <include name="**/*.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build" depends="compile" description="Build the web project into a WAR directory">
+        <delete dir="${war.dir}"/>
+        <copy todir="${warlib.dir}">
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${war.dir}">
+            <fileset dir="${web.src.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        <copy todir="${warwebinf.dir}" preservelastmodified="true">
+            <fileset dir="${conf.dir}">
+                <include name="**/*.xml" />
+                <include name="**/*.tld" />
+            	<exclude name="**/hibernate*.xml"/>
+            </fileset>
+        </copy>
+        <copy todir="${warclasses.dir}" preservelastmodified="true">
+            <fileset dir="${conf.dir}">
+                <include name="**/hibernate*.xml" />
+                <include name="**/*.properties" />
+            </fileset>
+        </copy>
+        <jar destfile="${warlib.dir}/${appname}.jar" basedir="${class.dir}" excludes="**/test/*"/>
+    </target>
+
+    <target name="dist" depends="build" description="Build a WAR file for distribution to a web container">
+        <zip destfile="${war.file}" basedir="${war.dir}"/>
+    </target>
+
+    <target name="deploy" depends="dist" description="Deploy the WAR file to a web container">
+        <tomcatdeploy url="${tomcat.mgr.url}" username="${tomcat.mgr.user}" password="${tomcat.mgr.pass}" path="${tomcat.app.path}" war="file:${war.file}"/>
+    </target>
+
+    <target name="undeploy" depends="dist" description="Un-deploy the WAR file from a web container">
+        <tomcatundeploy url="${tomcat.mgr.url}" username="${tomcat.mgr.user}" password="${tomcat.mgr.pass}" path="${tomcat.app.path}"/>
+    </target>
+
+    <target name="redeploy" depends="undeploy" description="Re-deploy the WAR file to a web container">
+        <tomcatdeploy url="${tomcat.mgr.url}" username="${tomcat.mgr.user}" password="${tomcat.mgr.pass}" path="${tomcat.app.path}" war="file:${war.file}"/>
+    </target>
+
+</project>

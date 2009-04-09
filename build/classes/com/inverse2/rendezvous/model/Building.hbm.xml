@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 3, 2009 1:46:23 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+ <class catalog="Rendezvous"
+  name="com.inverse2.rendezvous.model.Building" table="building">
+  <id name="buildingId" type="java.lang.Integer">
+   <column name="buildingId"/>
+   <generator class="identity"/>
+  </id>
+  <many-to-one class="com.inverse2.rendezvous.model.LkCountryCode"
+   fetch="select" name="lkCountryCode" lazy="false">
+   <column length="3" name="countryCode" not-null="true"/>
+  </many-to-one>
+  <property generated="never" lazy="false" name="buildingName" type="string">
+   <column length="45" name="buildingName"/>
+  </property>
+  <property generated="never" lazy="false" name="address1" type="string">
+   <column length="45" name="address1"/>
+  </property>
+  <property generated="never" lazy="false" name="address2" type="string">
+   <column length="45" name="address2"/>
+  </property>
+  <property generated="never" lazy="false" name="address3" type="string">
+   <column length="45" name="address3"/>
+  </property>
+  <property generated="never" lazy="false" name="town" type="string">
+   <column length="45" name="town"/>
+  </property>
+  <property generated="never" lazy="false" name="postcode" type="string">
+   <column length="45" name="postcode"/>
+  </property>
+  <property generated="never" lazy="false" name="activeFrom" type="date">
+   <column length="0" name="activeFrom"/>
+  </property>
+  <property generated="never" lazy="false" name="activeUntil" type="date">
+   <column length="0" name="activeUntil"/>
+  </property>
+  <set cascade="all" lazy="false" name="floors" order-by="displayOrder,floorId">
+   <key>
+    <column name="buildingId"/>
+   </key>
+   <one-to-many class="com.inverse2.rendezvous.model.Floor"/>
+  </set>
+  
+ </class>
+</hibernate-mapping>

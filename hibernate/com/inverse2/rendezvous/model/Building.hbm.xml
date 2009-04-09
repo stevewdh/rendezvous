@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.Building" table="building" catalog="Rendezvous">
+        <id name="buildingId" type="java.lang.Integer">
+            <column name="buildingId" />
+
+            <generator class="identity" />
+        </id>
+
+        <property name="buildingName" type="string">
+            <column name="buildingName" length="45" />
+        </property>
+
+        <property name="address1" type="string">
+            <column name="address1" length="45" />
+        </property>
+
+        <property name="address2" type="string">
+            <column name="address2" length="45" />
+        </property>
+
+        <property name="address3" type="string">
+            <column name="address3" length="45" />
+        </property>
+
+        <property name="town" type="string">
+            <column name="town" length="45" />
+        </property>
+
+        <property name="postcode" type="string">
+            <column name="postcode" length="45" />
+        </property>
+
+        <property name="countryCode" type="string">
+            <column name="countryCode" length="3" not-null="true" />
+        </property>
+
+        <property name="activeFrom" type="date">
+            <column name="activeFrom" length="0" />
+        </property>
+
+        <property name="activeUntil" type="date">
+            <column name="activeUntil" length="0" />
+        </property>
+    </class>
+</hibernate-mapping>
+

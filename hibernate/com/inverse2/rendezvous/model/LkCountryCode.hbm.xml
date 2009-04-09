@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 4, 2009 6:53:30 PM by Hibernate Tools 3.2.4.CR1 -->
+<hibernate-mapping>
+    <class name="com.inverse2.rendezvous.model.LkCountryCode" table="lkCountryCode" catalog="Rendezvous">
+        <id name="countryCode" type="string">
+            <column name="countryCode" length="3" />
+
+            <generator class="assigned" />
+        </id>
+
+        <property name="countryName" type="string">
+            <column name="countryName" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>
+
