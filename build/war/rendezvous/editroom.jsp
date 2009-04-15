@@ -28,7 +28,7 @@ Room: <c:out value="${command.roomName}" />
     
     <p>
         <input name="save" type="submit" value="Save"/>
-        <input name="quit" type="button" value="Quit" onClick="javascript:window.location='editfloor.htm?floorid=${command.floorId}'"/> <br/>
+        <input name="quit" type="button" value="Quit" onClick="javascript:window.location='editfloor.htm?floorid=${floorid}'"/> <br/>
     </p>
 </form>
 

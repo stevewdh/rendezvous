@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.inverse2.rendezvous.security.ApplicationSecurityManager;
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 
 public class HomePageController implements Controller {
 	
-	private ApplicationSecurityManager applicationSecurityManager;
+	private ApplicationContextManager applicationContextManager;
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		return(new ModelAndView("homepage", "user", applicationSecurityManager.getUser(request)));
+		return(new ModelAndView("homepage", "user", applicationContextManager.getUser(request)));
 	}
 
-    public ApplicationSecurityManager getApplicationSecurityManager() {
-        return applicationSecurityManager;
+    public ApplicationContextManager getApplicationContextManager() {
+        return applicationContextManager;
     }
 
-    public void setApplicationSecurityManager(ApplicationSecurityManager applicationSecurityManager) {
-        this.applicationSecurityManager = applicationSecurityManager;
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
     }
 
 }

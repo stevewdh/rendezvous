@@ -3,11 +3,11 @@
 
 <h1>Building List...</h1>
 
-<c:forEach items="${buildingsList}" var="building">
+<c:forEach items="${buildingList.buildingList}" var="building">
     <c:out value="${building.buildingId}" /> : 
     
     <a href='editbuilding.htm?buildingid=<c:out value="${building.buildingId}"/>'>
-        <c:out value="${building.buildingName}" /><br>
+        ${building.buildingName}<br>
     </a>
 		
 </c:forEach>

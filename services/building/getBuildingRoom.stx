@@ -1,0 +1,14 @@
+xmlselect using noschema
+select
+    r.roomId             into xml:{room.roomId},
+    r.roomCode           into xml:{room.roomCode},
+    r.roomName           into xml:{room.roomName},
+    r.capacity           into xml:{room.capacity},
+    r.location           into xml:{room.location},
+    r.selfService        into xml:{room.selfService}
+from
+    room    r
+where
+    r.roomId = ${roomId}
+
+order by roomId

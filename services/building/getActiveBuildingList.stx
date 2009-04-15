@@ -1,0 +1,21 @@
+xmlselect using noschema
+select
+    b.buildingId         into xml:{buildingList.building.buildingId},
+    b.buildingName       into xml:{buildingList.building.buildingName},
+    b.address1           into xml:{buildingList.building.address1},
+    b.address2           into xml:{buildingList.building.address2},
+    b.address3           into xml:{buildingList.building.address3},
+    b.town               into xml:{buildingList.building.town},
+    b.postcode           into xml:{buildingList.building.postcode},
+    b.activeFrom         into xml:{buildingList.building.activeFrom},
+    b.activeUntil        into xml:{buildingList.building.activeUntil},
+    c.countryCode        into xml:{buildingList.building.country.countryCode},
+    c.countryName        into xml:{buildingList.building.country.countryName}
+from
+    building      b,
+    lkCountryCode c
+where
+    curdate() between b.activeFrom and b.activeUntil
+and b.countryCode = c.countryCode
+
+order by buildingId newValue throwNew xml:{buildingList.building}

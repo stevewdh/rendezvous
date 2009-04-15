@@ -29,8 +29,8 @@ Building: <c:out value="${command.buildingName}" />
     
      <select name='command.lkCountryCode.countryCode'>
         <option value=""></option>
-        <c:forEach items="${countryCodes}" var="countryCode">
-            <option value='${countryCode.countryCode}' <c:if test="${countryCode.countryCode == command.lkCountryCode.countryCode}">SELECTED</c:if> >${countryCode.countryName}</option>
+        <c:forEach items="${countryCodes.codeList}" var="countryCode">
+            <option value='${countryCode.countryCode}' <c:if test="${countryCode.countryCode == command.countryCode.countryCode}">SELECTED</c:if> >${countryCode.countryName}</option>
         </c:forEach>
     </select>
     

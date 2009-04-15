@@ -9,13 +9,12 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 import com.inverse2.rendezvous.model.User;
-import com.inverse2.rendezvous.security.ApplicationSecurityManager;
-import com.inverse2.rendezvous.util.HibernateUtil;
 
 public class SignInController extends SimpleFormController {
 	
-	private ApplicationSecurityManager applicationSecurityManager;
+	private ApplicationContextManager applicationContextManager;
 	
 	protected Object getFormBackingObject(HttpServletRequest request) throws Exception{
 		return(new User());
@@ -25,7 +24,7 @@ public class SignInController extends SimpleFormController {
 	 * If the user is already logged in then forward to the succes view...
 	 */
 	public ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors, Map controlModel) throws Exception {
-		if (applicationSecurityManager.getUser(request) != null) {
+		if (applicationContextManager.getUser(request) != null) {
 			return(new ModelAndView(getSuccessView()));
 		}
 		
@@ -52,21 +51,24 @@ public class SignInController extends SimpleFormController {
 		}
 		
 		// TODO Don't get the default user...
-		User user = (User) HibernateUtil.getById(User.class, 1);
+		// TODO User user = (User) HibernateUtil.getById(User.class, 1);
+		User user = new User();
+		user.setFirstName("Steve");
+		user.setUserPreviledgeCode("admin");
 		
-		applicationSecurityManager.setUser(request, user);
+		applicationContextManager.setUser(request, user);
 	}
 	
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         return new ModelAndView(getSuccessView());
     }
 	
-    public ApplicationSecurityManager getApplicationSecurityManager() {
-        return applicationSecurityManager;
+    public ApplicationContextManager getApplicationContextManager() {
+        return applicationContextManager;
     }
 
-    public void setApplicationSecurityManager(ApplicationSecurityManager applicationSecurityManager) {
-        this.applicationSecurityManager = applicationSecurityManager;
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
     }
 
 }

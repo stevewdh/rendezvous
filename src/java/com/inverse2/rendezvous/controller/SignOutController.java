@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.inverse2.rendezvous.security.ApplicationSecurityManager;
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 
 public class SignOutController implements Controller {
 
 	private String                     signOutPage;
-	private ApplicationSecurityManager applicationSecurityManager;
+	private ApplicationContextManager applicationContextManager;
 	
 	public String getSignOutPage() {
 		return(signOutPage);
@@ -21,16 +21,16 @@ public class SignOutController implements Controller {
 		this.signOutPage = signOutPage;
 	}
 
-    public ApplicationSecurityManager getApplicationSecurityManager() {
-        return applicationSecurityManager;
+    public ApplicationContextManager getApplicationContextManager() {
+        return applicationContextManager;
     }
 
-    public void setApplicationSecurityManager(ApplicationSecurityManager applicationSecurityManager) {
-        this.applicationSecurityManager = applicationSecurityManager;
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
     }
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		applicationSecurityManager.setUser(request, null);
+		applicationContextManager.setUser(request, null);
 		return(new ModelAndView(signOutPage));
 	}
 	

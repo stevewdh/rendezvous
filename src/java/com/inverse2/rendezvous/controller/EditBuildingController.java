@@ -11,16 +11,27 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 import com.inverse2.rendezvous.databinding.MasterDetailServletRequestDataBinder;
 import com.inverse2.rendezvous.model.Building;
-import com.inverse2.rendezvous.util.HibernateUtil;
+import com.inverse2.rendezvous.model.LkCountryCodeList;
+import com.inverse2.rendezvous.util.ToasterServiceHelper;
 
 public class EditBuildingController extends SimpleFormController {
 	
+	private ApplicationContextManager applicationContextManager;
 	Building building;
 	String   buildingIdParam;
 	int      buildingId;
 	
+    public ApplicationContextManager getApplicationContextManager() {
+        return applicationContextManager;
+    }
+
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
+    }
+    
 	public ServletRequestDataBinder createBinder(HttpServletRequest request, Object command) throws Exception {
 		ServletRequestDataBinder b = new MasterDetailServletRequestDataBinder(command, getCommandName());
 		prepareBinder(b);
@@ -46,7 +57,7 @@ public class EditBuildingController extends SimpleFormController {
 			/* Return a specific building for editing on the form... */
 			try {
 				buildingId = Integer.parseInt(buildingIdParam);
-				building   = (Building) HibernateUtil.getById(Building.class, buildingId);
+				building   = (Building) ToasterServiceHelper.getEntity("building/getBuildingById", Building.class, "buildingId="+buildingId);
 			}
 			catch (Exception ex) {
 				System.err.println("Could not parse building Id [" + buildingIdParam + "]");
@@ -56,6 +67,8 @@ public class EditBuildingController extends SimpleFormController {
 		else {
 			building = new Building();
 		}
+		
+		applicationContextManager.setContextItem(request, ControllerConstants.BUILDING_ID_PARAM, buildingId);
 		
 		return(building);
 	}
@@ -72,7 +85,7 @@ public class EditBuildingController extends SimpleFormController {
 	 */
     public Map referenceData(HttpServletRequest request) throws Exception {
         HashMap model = new HashMap();
-        model.put("countryCodes", HibernateUtil.getListFromQuery("from LkCountryCode"));
+        model.put("countryCodes", ToasterServiceHelper.getEntity("lookupData/getCountryCodes", LkCountryCodeList.class));
         return(model);
     }
     
@@ -82,7 +95,7 @@ public class EditBuildingController extends SimpleFormController {
      * when the save is completed.
      */
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
-    	HibernateUtil.save(command);
+    	// TODO HibernateUtil.save(command);
     	return new ModelAndView(getSuccessView()+"?"+ControllerConstants.BUILDING_ID_PARAM+"="+building.getBuildingId());
     }
 	

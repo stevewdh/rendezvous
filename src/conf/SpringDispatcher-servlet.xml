@@ -53,7 +53,7 @@
 
     <bean id="httpRequestInterceptor" class="com.inverse2.rendezvous.controller.HttpRequestInterceptor">
     	<property name="signInPage" value="signin.htm"/>
-    	<property name="applicationSecurityManager"><ref bean="applicationSecurityManager"/></property>
+    	<property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>																																
     
     
@@ -70,17 +70,17 @@
 		<property name="formView"     value="signin"/>
  		<property name="validator"><ref bean="SignInValidator"/></property>
 		<property name="successView"  value="redirect:homepage.htm"/>
-    	<property name="applicationSecurityManager"><ref bean="applicationSecurityManager"/></property>
+    	<property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
 	<bean name="SignInValidator"   class="com.inverse2.rendezvous.validators.SignInValidator"/>
     
     <bean name="SignOutController" class="com.inverse2.rendezvous.controller.SignOutController">
         <property name="signOutPage" value="redirect:welcome.htm"/>
-        <property name="applicationSecurityManager"><ref bean="applicationSecurityManager"/></property>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
     
     <bean name="HomePageController" class="com.inverse2.rendezvous.controller.HomePageController">
-        <property name="applicationSecurityManager"><ref bean="applicationSecurityManager"/></property>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
     
     <bean name="AdminFunctionsController" class="com.inverse2.rendezvous.controller.SimpleGenericController">
@@ -95,6 +95,7 @@
 		<property name="formView"     value="editbuilding"/>
  		<property name="validator"><ref bean="EditBuildingValidator"/></property>
 		<property name="successView"  value="redirect:editbuilding.htm"/>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
 	<bean name="EditBuildingValidator"   class="com.inverse2.rendezvous.validators.BuildingValidator"/>
 	
@@ -104,6 +105,7 @@
 		<property name="formView"     value="editfloor"/>
  		<property name="validator"><ref bean="EditFloorValidator"/></property>
 		<property name="successView"  value="redirect:editfloor.htm"/>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
 	<bean name="EditFloorValidator"   class="com.inverse2.rendezvous.validators.FloorValidator"/>
     
@@ -113,12 +115,13 @@
 		<property name="formView"     value="editroom"/>
  		<property name="validator"><ref bean="EditRoomValidator"/></property>
 		<property name="successView"  value="redirect:editfloor.htm"/>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
     </bean>
 	<bean name="EditRoomValidator"   class="com.inverse2.rendezvous.validators.RoomValidator"/>
     
     
     
     
-    <bean id="applicationSecurityManager" class="com.inverse2.rendezvous.security.ApplicationSecurityManager"/>
+    <bean id="applicationContextManager" class="com.inverse2.rendezvous.context.ApplicationContextManager"/>
     
 </beans>

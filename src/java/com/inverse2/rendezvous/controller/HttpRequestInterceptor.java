@@ -5,23 +5,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 import com.inverse2.rendezvous.model.User;
-import com.inverse2.rendezvous.security.ApplicationSecurityManager;
 
 public class HttpRequestInterceptor extends HandlerInterceptorAdapter {
 
     private String signInPage;
-    private ApplicationSecurityManager applicationSecurityManager;
+    private ApplicationContextManager applicationContextManager;
 
     /**
      * Uses ApplicationSecurityManager to ensure user is logged in; if not,
      * then user is forwarded to the sign-in page.
-     * @see ApplicationSecurityManager
+     * @see ApplicationContextManager
      */
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        User user = applicationSecurityManager.getUser(request);
+        User user = applicationContextManager.getUser(request);
 
         if (user == null) {
             response.sendRedirect(this.signInPage);
@@ -39,12 +39,12 @@ public class HttpRequestInterceptor extends HandlerInterceptorAdapter {
         this.signInPage = signInPage;
     }
 
-    public ApplicationSecurityManager getApplicationSecurityManager() {
-        return(applicationSecurityManager);
+    public ApplicationContextManager getApplicationContextManager() {
+        return(applicationContextManager);
     }
 
-    public void setApplicationSecurityManager(ApplicationSecurityManager applicationSecurityManager) {
-        this.applicationSecurityManager = applicationSecurityManager;
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
     }
 
 }

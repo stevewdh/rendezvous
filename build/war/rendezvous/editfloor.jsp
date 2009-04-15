@@ -26,7 +26,7 @@ Floor: ${command.floorName}
     
     <p>
         <input name="save" type="submit" value="Save"/>
-        <input name="quit" type="button" value="Quit" onClick="javascript:window.location='editbuilding.htm?buildingid=${command.building.buildingId}'"/> <br/>
+        <input name="quit" type="button" value="Quit" onClick="javascript:window.location='editbuilding.htm?buildingid=${buildingid}'"/> <br/>
     </p>
 </form>
 

@@ -8,14 +8,14 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
+import com.inverse2.rendezvous.context.ApplicationContextManager;
 import com.inverse2.rendezvous.databinding.MasterDetailServletRequestDataBinder;
-import com.inverse2.rendezvous.model.Building;
-import com.inverse2.rendezvous.model.Floor;
 import com.inverse2.rendezvous.model.Room;
-import com.inverse2.rendezvous.util.HibernateUtil;
+import com.inverse2.rendezvous.util.ToasterServiceHelper;
 
 public class EditRoomController extends SimpleFormController {
 	
+	private ApplicationContextManager applicationContextManager;
 	Room     room;
 	String   roomIdParam;
 	int      roomId;
@@ -43,19 +43,18 @@ public class EditRoomController extends SimpleFormController {
 		roomIdParam  = request.getParameter(ControllerConstants.ROOM_ID_PARAM);
 		floorIdParam = request.getParameter(ControllerConstants.FLOOR_ID_PARAM);
 		
-		/* TODO Should not return a room unless a valid floor Id is passed in... */
 		try {
 			floorId = Integer.parseInt(floorIdParam);
 		}
 		catch (Exception ex) {
-			floorId = -1;
+			floorId = (Integer) applicationContextManager.getContextItem(request, ControllerConstants.FLOOR_ID_PARAM);
 		}
 		
 		if (roomIdParam != null && roomIdParam.length() != 0) {
 			/* Return a specific room for editing on the form... */
 			try {
 				roomId = Integer.parseInt(roomIdParam);
-				room   = (Room) HibernateUtil.getById(Room.class, roomId);
+				room   = (Room) ToasterServiceHelper.getEntity("building/getBuildingRoom", Room.class, "roomId="+roomId);
 			}
 			catch (Exception ex) {
 				System.err.println("Could not create room object [" + roomIdParam + "]");
@@ -70,9 +69,20 @@ public class EditRoomController extends SimpleFormController {
 			room.setFloorId(floorId);
 		}
 		
+		applicationContextManager.setContextItem(request, ControllerConstants.FLOOR_ID_PARAM, floorId);
+		applicationContextManager.setContextItem(request, ControllerConstants.ROOM_ID_PARAM,  roomId);
+		
 		return(room);
 	}
 	
+    public ApplicationContextManager getApplicationContextManager() {
+        return applicationContextManager;
+    }
+
+    public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
+        this.applicationContextManager = applicationContextManager;
+    }
+    
 	/**
 	 * This method can be used to register custom field editors...
 	 */
@@ -86,7 +96,7 @@ public class EditRoomController extends SimpleFormController {
      * when the save is completed.
      */
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
-    	HibernateUtil.save(command);
+    	ToasterServiceHelper.putEntity("building/saveBuildingRoom", Room.class, command);
     	return new ModelAndView(getSuccessView() + "?"+ControllerConstants.FLOOR_ID_PARAM+"=" + floorId);
     }
 }
