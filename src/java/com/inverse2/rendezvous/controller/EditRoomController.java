@@ -69,10 +69,14 @@ public class EditRoomController extends SimpleFormController {
 			room.setFloorId(floorId);
 		}
 		
-		applicationContextManager.setContextItem(request, ControllerConstants.FLOOR_ID_PARAM, floorId);
-		applicationContextManager.setContextItem(request, ControllerConstants.ROOM_ID_PARAM,  roomId);
+		saveIds(request);
 		
 		return(room);
+	}
+	
+	private void saveIds(HttpServletRequest request) {
+		applicationContextManager.setContextItem(request, ControllerConstants.FLOOR_ID_PARAM, floorId);
+		applicationContextManager.setContextItem(request, ControllerConstants.ROOM_ID_PARAM,  roomId);
 	}
 	
     public ApplicationContextManager getApplicationContextManager() {

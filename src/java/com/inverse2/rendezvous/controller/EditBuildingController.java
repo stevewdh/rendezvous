@@ -95,7 +95,7 @@ public class EditBuildingController extends SimpleFormController {
      * when the save is completed.
      */
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
-    	// TODO HibernateUtil.save(command);
+    	building = (Building)ToasterServiceHelper.putEntity("building/saveBuilding", Building.class, command);
     	return new ModelAndView(getSuccessView()+"?"+ControllerConstants.BUILDING_ID_PARAM+"="+building.getBuildingId());
     }
 	

@@ -27,10 +27,10 @@ Building: <c:out value="${command.buildingName}" />
     <input name='command.town'         value='${command.town}'         type="text" size="32" maxlength="64"><br/>
     <input name='command.postcode'     value='${command.postcode}'     type="text" size="32" maxlength="64"><br/>
     
-     <select name='command.lkCountryCode.countryCode'>
+     <select name='command.country.countryCode'>
         <option value=""></option>
         <c:forEach items="${countryCodes.codeList}" var="countryCode">
-            <option value='${countryCode.countryCode}' <c:if test="${countryCode.countryCode == command.countryCode.countryCode}">SELECTED</c:if> >${countryCode.countryName}</option>
+            <option value='${countryCode.countryCode}' <c:if test="${countryCode.countryCode == command.country.countryCode}">SELECTED</c:if> >${countryCode.countryName}</option>
         </c:forEach>
     </select>
     

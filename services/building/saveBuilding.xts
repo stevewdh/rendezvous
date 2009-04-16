@@ -1,0 +1,21 @@
+
+autocommit off;
+\g
+
+/* Save building object to the database... */
+update table building using (insert, update) set
+    buildingId     = {building.buildingId, key:1, uid:true, type:'numeric'},
+    buildingName   = {building.buildingName},
+    address1       = {building.address1},
+    address2       = {building.address2},
+    address3       = {building.address3},
+    town           = {building.town},
+    postcode       = {building.postcode},
+    countryCode    = {building.country.countryCode},
+    activeFrom     = {building.activeFrom,  ifnull='1901-01-01'},
+    activeUntil    = {building.activeUntil, ifnull='2100-01-01'}
+;
+\g
+
+commit;
+\g

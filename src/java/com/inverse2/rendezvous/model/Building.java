@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.inverse2.rendezvous.util.JAXBDateAdapter;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -22,7 +25,11 @@ public class Building {
     private String 			address3;
     private String 			town;
     private String 			postcode;
+    
+    @XmlJavaTypeAdapter(JAXBDateAdapter.class)
     private Date 			activeFrom;
+    
+    @XmlJavaTypeAdapter(JAXBDateAdapter.class)
     private Date 			activeUntil;
     
     @XmlElementWrapper (name="floors")
@@ -56,11 +63,11 @@ public class Building {
         this.buildingId = buildingId;
     }
     
-    public LkCountryCode getCountryCode() {
+    public LkCountryCode getCountry() {
         return this.country;
     }
     
-    public void setCountryCode(LkCountryCode countryCode) {
+    public void setCountry(LkCountryCode countryCode) {
         this.country = countryCode;
     }
     

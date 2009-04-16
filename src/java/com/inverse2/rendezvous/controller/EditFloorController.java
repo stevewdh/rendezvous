@@ -69,8 +69,7 @@ public class EditFloorController extends SimpleFormController {
 			floor.setBuildingId(buildingId);
 		}
 		
-		applicationContextManager.setContextItem(request, ControllerConstants.BUILDING_ID_PARAM, buildingId);
-		applicationContextManager.setContextItem(request, ControllerConstants.FLOOR_ID_PARAM,    floorId);
+		saveIds(request);
 		
 		return(floor);
 	}
@@ -88,7 +87,9 @@ public class EditFloorController extends SimpleFormController {
      * when the save is completed.
      */
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) {
-    	// TODO HibernateUtil.save(command);
+    	floor = (Floor) ToasterServiceHelper.putEntity("building/saveFloor", Floor.class, command);
+    	floorId = floor.getFloorId();
+    	saveIds(request);
     	return new ModelAndView(getSuccessView() + "?"+ControllerConstants.BUILDING_ID_PARAM+"=" + buildingId + "&" + ControllerConstants.FLOOR_ID_PARAM+"=" + floorId);
     }
     
@@ -98,6 +99,11 @@ public class EditFloorController extends SimpleFormController {
 
     public void setApplicationContextManager(ApplicationContextManager applicationContextManager) {
         this.applicationContextManager = applicationContextManager;
+    }
+    
+    private void saveIds(HttpServletRequest request) {
+		applicationContextManager.setContextItem(request, ControllerConstants.BUILDING_ID_PARAM, buildingId);
+		applicationContextManager.setContextItem(request, ControllerConstants.FLOOR_ID_PARAM,    floorId);
     }
 
 }

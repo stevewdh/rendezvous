@@ -38,7 +38,7 @@ public class BuildingValidator implements Validator {
 		/**
 		 * Validate that the country code is not blank...
 		 */
-		ValidationUtils.rejectIfEmpty(errors, "lkCountryCode.countryCode", "buildingValidator.error.countryCode.empty");
+		ValidationUtils.rejectIfEmpty(errors, "country.countryCode", "buildingValidator.error.countryCode.empty");
 		
 	}
 
