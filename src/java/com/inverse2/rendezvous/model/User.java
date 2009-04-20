@@ -142,25 +142,25 @@ public class User {
 		
 		for (Iterator<UserPriviledge> i = userPriviledge.iterator(); i.hasNext(); ) {
 			UserPriviledge up = i.next();
-			if (up.getPriviledgeCode().equals(ADMIN_CODE)) {
+			if (up.getPriviledgeCode().equals(ADMIN_CODE) && up.isActive()) {
 				admin   = true;
 				facman  = true;
 				meetorg = true;
 				meetatt = true;
 			}
 			else
-			if (up.getPriviledgeCode().equals(FACILITIES_MANAGER_CODE)) {
+			if (up.getPriviledgeCode().equals(FACILITIES_MANAGER_CODE) && up.isActive()) {
 				facman  = true;
 				meetorg = true;
 				meetatt = true;
 			}
 			else
-			if (up.getPriviledgeCode().equals(MEETING_ORGANISER_CODE)) {
+			if (up.getPriviledgeCode().equals(MEETING_ORGANISER_CODE) && up.isActive()) {
 				meetorg = true;
 				meetatt = true;
 			}
 			else
-			if (up.getPriviledgeCode().equals(MEETING_ATTENDEE_CODE)) {
+			if (up.getPriviledgeCode().equals(MEETING_ATTENDEE_CODE) && up.isActive()) {
 				meetatt = true;
 			}
 		}

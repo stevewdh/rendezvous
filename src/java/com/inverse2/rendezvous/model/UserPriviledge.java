@@ -11,6 +11,10 @@ public class UserPriviledge {
 	private String  priviledgeDescription;
 	private String  active;
 	
+	public UserPriviledge() {
+		active = "Y";
+	}
+	
 	public Integer getUserPriviledgeId() {
 		return userPriviledgeId;
 	}
@@ -41,6 +45,13 @@ public class UserPriviledge {
 	
 	public void setActive(String active) {
 		this.active = active;
+	}
+	
+	public boolean isActive() {
+		if (active != null && active.equals("Y")) {
+			return(true);
+		}
+		return(false);
 	}
 	
 	
