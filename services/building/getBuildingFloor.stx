@@ -3,7 +3,8 @@ select
     f.buildingId         into xml:{floor.buildingId},
     f.floorId            into xml:{floor.floorId},
     f.floorName          into xml:{floor.floorName},
-    f.displayOrder       into xml:{floor.displayOrder}
+    f.displayOrder       into xml:{floor.displayOrder},
+    f.deleted            into xml:{floor.deleted}
 from
     floor    f
 where

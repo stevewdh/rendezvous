@@ -15,22 +15,18 @@ public class Floor {
 
     private Integer floorId;
     private Integer buildingId;
-    private String floorName;
+    private String  floorName;
     private Integer displayOrder;
+    private String  deleted;
     
     @XmlElementWrapper (name="rooms")
     @XmlElement        (name="room")
     private List<Room> rooms = new ArrayList<Room>(0);
 
     public Floor() {
+    	deleted = "N";
     }
 
-    public Floor(String floorName, Integer displayOrder, List<Room> rooms) {
-       this.floorName = floorName;
-       this.displayOrder = displayOrder;
-       this.rooms = rooms;
-    }
-   
     public Integer getFloorId() {
         return this.floorId;
     }
@@ -63,7 +59,15 @@ public class Floor {
         this.displayOrder = displayOrder;
     }
     
-    public List<Room> getRooms() {
+    public String getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+
+	public List<Room> getRooms() {
         return this.rooms;
     }
     

@@ -7,7 +7,8 @@ update table floor using (insert, update) set
     floorId        = {floor.floorId, key:1, uid:true, type:'numeric'},
     buildingId     = {floor.buildingId, type:'numeric'},
     floorName      = {floor.floorName},
-    displayOrder   = {floor.displayOrder, type:'numeric'}
+    displayOrder   = {floor.displayOrder, type:'numeric'},
+    deleted        = {floor.deleted}
 ;
 \g
 

@@ -27,6 +27,7 @@ from
     floor    f
 where
     f.buildingId = ${buildingId}
+and f.deleted    = 'N'
 xmlunion
 select
     r.roomId             into xml:{building.floors.floor.rooms.room.roomId},

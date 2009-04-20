@@ -54,6 +54,7 @@ CREATE  TABLE IF NOT EXISTS `Rendezvous`.`floor` (
   `buildingId` INT NULL ,
   `floorName` VARCHAR(45) NULL ,
   `displayOrder` INT NULL ,
+  `deleted` CHAR(1) NULL DEFAULT 'N' ,
   PRIMARY KEY (`floorId`) ,
   CONSTRAINT `fk_floor_building`
     FOREIGN KEY (`buildingId` )
