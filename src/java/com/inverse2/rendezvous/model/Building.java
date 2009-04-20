@@ -142,5 +142,17 @@ public class Building {
     public void setFloors(List<Floor> floors) {
         this.floors = floors;
     }
-
+    
+	/**
+	 * Had to name the method *get*IsActive because the JSP EL expects ${xxx.isActive} to resolve to getIsActive().
+	 * @return
+	 */
+    public boolean getIsActive() {
+    	Date now = new Date();
+    	if ((activeFrom  == null || now.after(activeFrom)  ) && 
+    		(activeUntil == null || now.before(activeUntil))    ) {
+    		return(true);
+    	}
+    	return(false);
+    }
 }

@@ -84,4 +84,17 @@ public class BuildingSummary {
 		this.activeUntil = activeUntil;
 	}
 	
+	/**
+	 * Had to name the method *get*IsActive because the JSP EL expects ${xxx.isActive} to resolve to getIsActive().
+	 * @return
+	 */
+    public boolean getIsActive() {
+    	Date now = new Date();
+    	if ((activeFrom  == null || now.after(activeFrom)  ) && 
+    		(activeUntil == null || now.before(activeUntil))    ) {
+    		return(true);
+    	}
+    	return(false);
+    }
+
 }

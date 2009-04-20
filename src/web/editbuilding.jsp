@@ -1,6 +1,16 @@
 <%@ include file="include.jsp" %>
 <%@ include file="header.jsp" %>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".datepicker").datepicker({dateFormat:'dd/mm/yy'});
+    });
+    activeFieldsOn = function() {
+        $("#activeFields")    .attr({style : "display:block"});
+        $("#editActiveFields").attr({style : "display:none"});
+    }
+</script>
+
 <h1>Edit a building</h1>
 
 Building: <c:out value="${command.buildingName}" />
@@ -26,13 +36,22 @@ Building: <c:out value="${command.buildingName}" />
     <input name='command.address3'     value='${command.address3}'     type="text" size="32" maxlength="64"><br/>
     <input name='command.town'         value='${command.town}'         type="text" size="32" maxlength="64"><br/>
     <input name='command.postcode'     value='${command.postcode}'     type="text" size="32" maxlength="64"><br/>
-    
+    	
      <select name='command.country.countryCode'>
         <option value=""></option>
         <c:forEach items="${countryCodes.codeList}" var="countryCode">
             <option value='${countryCode.countryCode}' <c:if test="${countryCode.countryCode == command.country.countryCode}">SELECTED</c:if> >${countryCode.countryName}</option>
         </c:forEach>
     </select>
+    
+    <br>
+    <div id="editActiveFields">
+        <a href="#" onclick="return activeFieldsOn()">Edit building active dates</a>
+    </div>
+    <div id="activeFields" style="display:none">
+        <input name="command.activeFrom"   value='<fmt:formatDate value="${command.activeFrom}"  type="DATE" pattern="dd/MM/yyyy"/>'  type="text" class="datepicker"/><br/>
+        <input name="command.activeUntil"  value='<fmt:formatDate value="${command.activeUntil}" type="DATE" pattern="dd/MM/yyyy"/>'  type="text" class="datepicker"/><br/>
+    </div>
     
     <p>
         <input name="save" type="submit" value="Save"/>

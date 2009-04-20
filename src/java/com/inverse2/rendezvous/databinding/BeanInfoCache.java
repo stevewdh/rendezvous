@@ -4,12 +4,11 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.inverse2.rendezvous.model.Floor;
 
 public class BeanInfoCache {
 	
@@ -444,6 +443,22 @@ class PropertyCache {
 			}
 			if (canonicalClassName.equals("java.lang.Character")) {
 				value = new Character(value.toString().charAt(0));
+			}
+			if (canonicalClassName.equals("java.util.Date")) {
+				SimpleDateFormat xmlDateParser    = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat usDateParser     = new SimpleDateFormat("MM/dd/yyyy");
+				SimpleDateFormat ukDateParser     = new SimpleDateFormat("dd/MM/yyyy");
+				try {
+					value = xmlDateParser.parse(value.toString());
+				}
+				catch (Exception ex) {
+					try {
+						value = usDateParser.parse(value.toString());
+					}
+					catch (Exception x) {
+						value = ukDateParser.parse(value.toString());
+					}
+				}
 			}
 			if (canonicalClassName.equals("java.lang.Boolean")) {
 				String strValue = value.toString();

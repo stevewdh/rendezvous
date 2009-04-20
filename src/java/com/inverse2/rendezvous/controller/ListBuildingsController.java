@@ -15,7 +15,7 @@ import com.inverse2.rendezvous.util.ToasterServiceHelper;
 public class ListBuildingsController implements Controller {
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    BuildingList buildingList = (BuildingList) ToasterServiceHelper.getEntity("building/getActiveBuildingList", BuildingList.class);
+	    BuildingList buildingList = (BuildingList) ToasterServiceHelper.getEntity("building/getBuildingList", BuildingList.class);
 		return(new ModelAndView("listbuildings", "buildingList", buildingList));
 	}
 	
