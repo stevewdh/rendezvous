@@ -1,0 +1,51 @@
+xmlselect using noschema
+select
+    b.buildingId         into xml:{building.buildingId},
+    b.buildingName       into xml:{building.buildingName},
+    b.address1           into xml:{building.address1},
+    b.address2           into xml:{building.address2},
+    b.address3           into xml:{building.address3},
+    b.town               into xml:{building.town},
+    b.postcode           into xml:{building.postcode},
+    b.activeFrom         into xml:{building.activeFrom},
+    b.activeUntil        into xml:{building.activeUntil},
+    c.countryCode        into xml:{building.country.countryCode},
+    c.countryName        into xml:{building.country.countryName}
+from
+    building      b,
+    lkCountryCode c
+where
+    b.buildingId  = ${buildingId}
+and b.countryCode = c.countryCode
+xmlunion
+select
+    f.buildingId         into xml:{building.floors.floor.buildingId},
+    f.floorId            into xml:{building.floors.floor.floorId},
+    f.floorName          into xml:{building.floors.floor.floorName},
+    f.displayOrder       into xml:{building.floors.floor.displayOrder}
+from
+    floor    f
+where
+    f.buildingId = ${buildingId}
+and f.deleted    = 'N'
+xmlunion
+select
+    r.roomId             into xml:{building.floors.floor.rooms.room.roomId},
+    r.roomCode           into xml:{building.floors.floor.rooms.room.roomCode},
+    r.roomName           into xml:{building.floors.floor.rooms.room.roomName},
+    r.capacity           into xml:{building.floors.floor.rooms.room.capacity},
+    r.location           into xml:{building.floors.floor.rooms.room.location},
+    r.selfService        into xml:{building.floors.floor.rooms.room.selfService}
+from
+    room    r,
+    floor   f
+where
+    f.buildingId = ${buildingId}
+and f.floorId    = r.floorId
+and f.deleted    = 'N'
+and r.deleted    = 'N'
+
+order by
+    buildingId,
+    floorId      newValue throwNew xml:{building.floors.floor},
+    roomId       newValue throwNew xml:{building.floors.floor.rooms.room}

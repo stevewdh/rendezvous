@@ -1,0 +1,30 @@
+xmlselect using noschema
+select
+    f.buildingId         into xml:{floor.buildingId},
+    f.floorId            into xml:{floor.floorId},
+    f.floorName          into xml:{floor.floorName},
+    f.displayOrder       into xml:{floor.displayOrder},
+    f.deleted            into xml:{floor.deleted}
+from
+    floor    f
+where
+    f.floorId = ${floorId}
+xmlunion
+select
+    r.roomId             into xml:{floor.rooms.room.roomId},
+    r.roomCode           into xml:{floor.rooms.room.roomCode},
+    r.roomName           into xml:{floor.rooms.room.roomName},
+    r.capacity           into xml:{floor.rooms.room.capacity},
+    r.location           into xml:{floor.rooms.room.location},
+    r.selfService        into xml:{floor.rooms.room.selfService}
+from
+    room    r,
+    floor   f
+where
+    f.floorId = ${floorId}
+and f.floorId = r.floorId
+and r.deleted = 'N'
+
+order by
+    floorId,
+    roomId newValue throwNew xml:{floor.rooms.room}

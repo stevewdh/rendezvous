@@ -1,0 +1,8 @@
+xmlselect using noschema
+select
+    countryCode    into xml:{lkCountryCodeList.code.countryCode},
+    countryName    into xml:{lkCountryCodeList.code.countryName}
+from
+    lkCountryCode
+order by
+    countryName newValue throwNew xml:{lkCountryCodeList.code}

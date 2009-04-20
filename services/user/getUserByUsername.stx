@@ -1,0 +1,33 @@
+
+xmlselect using noschema
+select
+    userId         into xml:{user.userId},
+    description    into xml:{user.description},
+    firstName      into xml:{user.firstName},
+    surname        into xml:{user.surname},
+    email          into xml:{user.email},
+    telephone      into xml:{user.telephone},
+    mobile         into xml:{user.mobile},
+    username       into xml:{user.username},
+    password       into xml:{user.password},
+    status         into xml:{user.status}
+ from
+    user
+where
+    username = '${username}'
+xmlunion
+select
+    p.userPriviledgeId     into xml:{user.userPriviledge.userPriviledgeId},
+    p.userPriviledgeCode   into xml:{user.userPriviledge.priviledgeCode},
+    p.activeFlag           into xml:{user.userPriviledge.activeFlag}
+from
+    userPriviledge p,
+    user           u
+where
+    u.username = '${username}'
+and u.userId   = p.userId
+
+order by
+    userId,
+    userPriviledgeId newValue throwNew xml:{user.userPriviledge}
+;

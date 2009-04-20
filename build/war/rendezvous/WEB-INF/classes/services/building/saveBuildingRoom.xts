@@ -1,0 +1,18 @@
+
+autocommit off;
+\g
+
+update table room using (insert, update) set
+    roomId       = {room.roomId, key:1, uid:true, type:'numeric'},
+    roomCode     = {room.roomCode},
+    roomName     = {room.roomName},
+    capacity     = {room.capacity, type:'numeric'},
+    location     = {room.location},
+    selfService  = {room.selfService},
+    deleted      = {room.deleted},
+    floorId      = {room.floorId, type:'numeric'}
+;
+\g
+
+commit;
+\g
