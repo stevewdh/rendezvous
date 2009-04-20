@@ -42,6 +42,8 @@ from
 where
     f.buildingId = ${buildingId}
 and f.floorId    = r.floorId
+and f.deleted    = 'N'
+and r.deleted    = 'N'
 
 order by
     buildingId,

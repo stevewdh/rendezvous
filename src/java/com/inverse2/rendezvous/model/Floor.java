@@ -75,9 +75,12 @@ public class Floor {
         this.rooms = rooms;
     }
 
-
+    public int getRoomCount() {
+    	if (rooms == null) {
+    		return(0);
+    	}
+    	return(rooms.size());
+    }
 
 
 }
-
-

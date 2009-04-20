@@ -5,7 +5,8 @@ select
     r.roomName           into xml:{room.roomName},
     r.capacity           into xml:{room.capacity},
     r.location           into xml:{room.location},
-    r.selfService        into xml:{room.selfService}
+    r.selfService        into xml:{room.selfService},
+    r.deleted            into xml:{room.deleted}
 from
     room    r
 where

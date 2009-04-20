@@ -9,6 +9,7 @@ update table room using (insert, update) set
     capacity     = {room.capacity, type:'numeric'},
     location     = {room.location},
     selfService  = {room.selfService},
+    deleted      = {room.deleted},
     floorId      = {room.floorId, type:'numeric'}
 ;
 \g

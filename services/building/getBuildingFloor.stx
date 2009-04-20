@@ -23,6 +23,7 @@ from
 where
     f.floorId = ${floorId}
 and f.floorId = r.floorId
+and r.deleted = 'N'
 
 order by
     floorId,

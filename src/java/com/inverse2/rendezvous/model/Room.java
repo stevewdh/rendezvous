@@ -13,10 +13,13 @@ public class Room {
     private String    roomName;
     private Integer   capacity;
     private String    location;
-    private char      selfService;
+    private String    selfService;
+    private String    deleted;
     private Integer   floorId;
 
     public Room() {
+    	selfService = "Y";
+    	deleted = "Y";
     }
 	
     public Integer getRoomId() {
@@ -59,15 +62,23 @@ public class Room {
         this.location = location;
     }
     
-    public char getSelfService() {
+    public String getSelfService() {
         return this.selfService;
     }
     
-    public void setSelfService(char selfService) {
+    public void setSelfService(String selfService) {
         this.selfService = selfService;
     }
     
-    public Integer getFloorId() {
+    public String getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+
+	public Integer getFloorId() {
         return this.floorId;
     }
     

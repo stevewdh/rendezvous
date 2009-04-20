@@ -77,7 +77,8 @@ CREATE  TABLE IF NOT EXISTS `Rendezvous`.`room` (
   `roomName` VARCHAR(45) NOT NULL COMMENT 'A name for the room.' ,
   `capacity` INT NULL ,
   `location` VARCHAR(64) NULL ,
-  `selfService` CHAR(1) NULL ,
+  `selfService` CHAR(1) NULL DEFAULT 'Y' ,
+  `deleted` CHAR(1) NULL DEFAULT 'N' ,
   `floorId` INT NULL ,
   PRIMARY KEY (`roomId`) ,
   CONSTRAINT `fk_room_floor`
