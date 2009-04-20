@@ -29,6 +29,10 @@ INSERT INTO `room` (`roomCode`, `roomName`, `capacity`, `location`, `selfService
 /**
  * Users
  */
-INSERT INTO `user` (`userPreviledgeCode`, `description`, `firstName`, `surname`, `email`, `telephone`, `mobile`) VALUES ('admin', 'Super User', 'Steve', 'Harding', 'steve@email.com', '020 7654 2234', '07776 654522');
+INSERT INTO `user` (`description`, `firstName`, `surname`, `email`, `telephone`, `mobile`, `username`, `password`, `status`) VALUES ('Test user', 'Steve', 'Harding', 'steve@email.com', '020 7267 8373', '0787 373 2231', 'steve',  'steve', 'A');
+INSERT INTO `user` (`description`, `firstName`, `surname`, `email`, `telephone`, `mobile`, `username`, `password`, `status`) VALUES ('Facilities Manager Test User', 'Bob', 'Baggins', 'bb@email.com', '020 7267 8373', '0787 373 2231', 'facman', 'steve', 'A');
 \g
 
+INSERT INTO `userPriviledge` (`userId`, `userPriviledgeCode`, `activeFlag`) VALUES (1, 'admin',  'Y');
+INSERT INTO `userPriviledge` (`userId`, `userPriviledgeCode`, `activeFlag`) VALUES (2, 'facman', 'Y');
+\g

@@ -18,7 +18,7 @@
 </c:if>
 
 <!-- Create the menu along the top of the page -->
-<c:if test="${user.userPreviledgeCode == 'admin'}">
+<c:if test="${user.isAdminUser}">
     <a href="adminfunctions.htm">Administration Functions Page</a><br/>
 </c:if>
 

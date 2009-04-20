@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import com.inverse2.rendezvous.context.ApplicationContextManager;
 import com.inverse2.rendezvous.model.User;
+import com.inverse2.rendezvous.util.ToasterServiceHelper;
 
 public class SignInController extends SimpleFormController {
 	
@@ -36,25 +37,31 @@ public class SignInController extends SimpleFormController {
 			return;
 		}
 		
-		/** TODO Check username/password... **/
 		String username = request.getParameter(ControllerConstants.USERNAME);
 		String password = request.getParameter(ControllerConstants.PASSWORD);
 		
 		if (username == null || username.equals("")) {
 			errors.reject("signin.error.username.empty");
-			return;
 		}
 		
 		if (password == null || password.equals("")) {
 			errors.reject("signin.error.password.empty");
-			return;
 		}
 		
-		// TODO Don't get the default user...
-		// TODO User user = (User) HibernateUtil.getById(User.class, 1);
-		User user = new User();
-		user.setFirstName("Steve");
-		user.setUserPreviledgeCode("admin");
+		User user = null;
+		try {
+			user = (User) ToasterServiceHelper.getEntity("user/getUserByUsername", User.class, "username="+username);
+			if (user.getPassword().equals(password) == false) {
+				errors.reject("signin.error.invalid.password");
+				return;
+			}
+		}
+		catch (Exception ex) {
+			System.out.printf("Exception selecting user [%s]\n", username);
+			ex.printStackTrace();
+			errors.reject("signin.error.error.selecting");
+			return;
+		}
 		
 		applicationContextManager.setUser(request, user);
 	}
