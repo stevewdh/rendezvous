@@ -110,6 +110,12 @@ public class User {
 	}
 
 	public void setStatus(String status) {
+		/**
+		 * If the users status changes to 'N' (new user) then generate a password
+		 */
+		if (status.equals("N") && (this.status == null || this.status.equals("N") == false)) {
+			this.setPassword("password");
+		}
 		this.status = status;
 	}
 	

@@ -55,7 +55,7 @@ public class SignInController extends SimpleFormController {
 				errors.reject("signin.error.invalid.password");
 				return;
 			}
-			if (user.getStatus().equals("A") == false) {
+			if (user.getStatus().equals("D")) {
 				errors.reject("signin.error.inactive.user");
 				return;
 			}
@@ -71,6 +71,7 @@ public class SignInController extends SimpleFormController {
 	}
 	
     public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+    	// TODO if the user has status 'N' then direct to the change your password page...
         return new ModelAndView(getSuccessView());
     }
 	
