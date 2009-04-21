@@ -1,0 +1,20 @@
+
+xmlselect using noschema
+select
+    userId             into xml:{userList.user.userId},
+    description        into xml:{userList.user.description},
+    firstName          into xml:{userList.user.firstName},
+    surname            into xml:{userList.user.surname},
+    email              into xml:{userList.user.email},
+    telephone          into xml:{userList.user.telephone},
+    mobile             into xml:{userList.user.mobile},
+    username           into xml:{userList.user.username},
+    password           into xml:{userList.user.password},
+    status             into xml:{userList.user.status},
+    userPriviledgeCode into xml:{userList.user.userPriviledgeCode}
+ from
+    user
+
+order by
+    userId           newValue throwNew xml:{userList.user}
+;

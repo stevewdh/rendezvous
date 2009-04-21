@@ -1,0 +1,9 @@
+xmlselect using noschema
+select
+    userPriviledgeCode  into xml:{lkUserPriviledgeCodeList.code.userPriviledgeCode},
+    description         into xml:{lkUserPriviledgeCodeList.code.description}
+from
+    LkUserPriviledge
+
+order by userPriviledgeCode newValue throwNew xml:{lkUserPriviledgeCodeList.code}
+;

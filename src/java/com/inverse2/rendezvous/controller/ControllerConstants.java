@@ -10,6 +10,7 @@ public class ControllerConstants {
 	public static String	ROOM_ID_PARAM		= "roomid";
 	public static String    USERNAME			= "username";
 	public static String	PASSWORD			= "password";
+	public static String	USER_ID_PARAM	    = "userid";
 	
 	
 }

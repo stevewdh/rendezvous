@@ -132,6 +132,30 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Rendezvous`.`lkUserStatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Rendezvous`.`lkUserStatus` ;
+
+CREATE  TABLE IF NOT EXISTS `Rendezvous`.`lkUserStatus` (
+  `status` CHAR(12) NOT NULL ,
+  `description` VARCHAR(45) NULL ,
+  PRIMARY KEY (`status`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Rendezvous`.`lkUserPriviledge`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Rendezvous`.`lkUserPriviledge` ;
+
+CREATE  TABLE IF NOT EXISTS `Rendezvous`.`lkUserPriviledge` (
+  `userPriviledgeCode` CHAR(12) NOT NULL ,
+  `description` VARCHAR(45) NULL ,
+  PRIMARY KEY (`userPriviledgeCode`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Rendezvous`.`user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Rendezvous`.`user` ;
@@ -147,8 +171,23 @@ CREATE  TABLE IF NOT EXISTS `Rendezvous`.`user` (
   `username` VARCHAR(45) NULL ,
   `password` VARCHAR(45) NULL ,
   `status` CHAR(12) NULL ,
-  PRIMARY KEY (`userId`) )
+  `userPriviledgeCode` CHAR(12) NULL ,
+  PRIMARY KEY (`userId`) ,
+  CONSTRAINT `fk_user_lkUserStatus`
+    FOREIGN KEY (`status` )
+    REFERENCES `Rendezvous`.`lkUserStatus` (`status` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_lkUserPreviledge`
+    FOREIGN KEY (`userPriviledgeCode` )
+    REFERENCES `Rendezvous`.`lkUserPriviledge` (`userPriviledgeCode` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE INDEX fk_user_lkUserStatus ON `Rendezvous`.`user` (`status` ASC) ;
+
+CREATE INDEX fk_user_lkUserPreviledge ON `Rendezvous`.`user` (`userPriviledgeCode` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -428,18 +467,6 @@ CREATE INDEX fk_countryHolidays_countryCode ON `Rendezvous`.`countryHolidays` (`
 
 
 -- -----------------------------------------------------
--- Table `Rendezvous`.`lkUserPreviledge`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Rendezvous`.`lkUserPreviledge` ;
-
-CREATE  TABLE IF NOT EXISTS `Rendezvous`.`lkUserPreviledge` (
-  `userPriviledgeCode` CHAR(12) NOT NULL ,
-  `description` VARCHAR(45) NULL ,
-  PRIMARY KEY (`userPriviledgeCode`) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `Rendezvous`.`buildingContact`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `Rendezvous`.`buildingContact` ;
@@ -644,34 +671,6 @@ CREATE  TABLE IF NOT EXISTS `Rendezvous`.`resourceInstance` (
 ENGINE = InnoDB;
 
 CREATE INDEX fk_resource_resourceType ON `Rendezvous`.`resourceInstance` (`resourceTypeCode` ASC) ;
-
-
--- -----------------------------------------------------
--- Table `Rendezvous`.`userPriviledge`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Rendezvous`.`userPriviledge` ;
-
-CREATE  TABLE IF NOT EXISTS `Rendezvous`.`userPriviledge` (
-  `userPriviledgeId` INT NOT NULL AUTO_INCREMENT ,
-  `userId` INT NOT NULL ,
-  `userPriviledgeCode` CHAR(12) NOT NULL COMMENT '\n' ,
-  `activeFlag` CHAR(1) NOT NULL DEFAULT 'Y' ,
-  PRIMARY KEY (`userPriviledgeId`) ,
-  CONSTRAINT `fk_userPriviledge_user`
-    FOREIGN KEY (`userId` )
-    REFERENCES `Rendezvous`.`user` (`userId` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_userPriviledge_lkUserPreviledge`
-    FOREIGN KEY (`userPriviledgeCode` )
-    REFERENCES `Rendezvous`.`lkUserPreviledge` (`userPriviledgeCode` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX fk_userPriviledge_user ON `Rendezvous`.`userPriviledge` (`userId` ASC) ;
-
-CREATE INDEX fk_userPriviledge_lkUserPreviledge ON `Rendezvous`.`userPriviledge` (`userPriviledgeCode` ASC) ;
 
 
 

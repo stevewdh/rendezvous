@@ -55,6 +55,10 @@ public class SignInController extends SimpleFormController {
 				errors.reject("signin.error.invalid.password");
 				return;
 			}
+			if (user.getStatus().equals("A") == false) {
+				errors.reject("signin.error.inactive.user");
+				return;
+			}
 		}
 		catch (Exception ex) {
 			System.out.printf("Exception selecting user [%s]\n", username);

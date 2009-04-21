@@ -1,0 +1,9 @@
+xmlselect using noschema
+select
+    status        into xml:{lkUserStatusCodeList.code.status},
+    description   into xml:{lkUserStatusCodeList.code.description}
+from
+    LkUserStatus
+
+order by status newValue throwNew xml:{lkUserStatusCodeList.code}
+;

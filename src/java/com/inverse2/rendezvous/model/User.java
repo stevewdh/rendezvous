@@ -28,7 +28,7 @@ public class User {
     private String 	username;
     private String 	password;
     private String 	status;
-    private List<UserPriviledge>	userPriviledge = new ArrayList<UserPriviledge>(0);
+    private String  userPriviledgeCode;
      
     public User() {
     }
@@ -113,6 +113,14 @@ public class User {
 		this.status = status;
 	}
 	
+	public String getUserPriviledgeCode() {
+		return userPriviledgeCode;
+	}
+
+	public void setUserPriviledgeCode(String userPriviledgeCode) {
+		this.userPriviledgeCode = userPriviledgeCode;
+	}
+
 	public boolean getIsAdminUser() {
 		return(hasPrivilegde(ADMIN_CODE));
 	}
@@ -140,29 +148,26 @@ public class User {
 		boolean meetatt = false;
 		boolean pub     = true;
 		
-		for (Iterator<UserPriviledge> i = userPriviledge.iterator(); i.hasNext(); ) {
-			UserPriviledge up = i.next();
-			if (up.getPriviledgeCode().equals(ADMIN_CODE) && up.isActive()) {
-				admin   = true;
-				facman  = true;
-				meetorg = true;
-				meetatt = true;
-			}
-			else
-			if (up.getPriviledgeCode().equals(FACILITIES_MANAGER_CODE) && up.isActive()) {
-				facman  = true;
-				meetorg = true;
-				meetatt = true;
-			}
-			else
-			if (up.getPriviledgeCode().equals(MEETING_ORGANISER_CODE) && up.isActive()) {
-				meetorg = true;
-				meetatt = true;
-			}
-			else
-			if (up.getPriviledgeCode().equals(MEETING_ATTENDEE_CODE) && up.isActive()) {
-				meetatt = true;
-			}
+		if (userPriviledgeCode.equals(ADMIN_CODE)) {
+			admin   = true;
+			facman  = true;
+			meetorg = true;
+			meetatt = true;
+		}
+		else
+		if (userPriviledgeCode.equals(FACILITIES_MANAGER_CODE)) {
+			facman  = true;
+			meetorg = true;
+			meetatt = true;
+		}
+		else
+		if (userPriviledgeCode.equals(MEETING_ORGANISER_CODE)) {
+			meetorg = true;
+			meetatt = true;
+		}
+		else
+		if (userPriviledgeCode.equals(MEETING_ATTENDEE_CODE)) {
+			meetatt = true;
 		}
 		
 		if (code.equals(ADMIN_CODE) && admin == true) {

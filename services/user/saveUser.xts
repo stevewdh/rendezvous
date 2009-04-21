@@ -1,0 +1,22 @@
+
+autocommit off;
+\g
+
+/* Save user object to the database... */
+update table user using (insert, update) set
+    userId               = {user.userId, key:1, uid:true, type:'numeric'},
+    description          = {user.description},
+    firstName            = {user.firstName},
+    surname              = {user.surname},
+    email                = {user.email},
+    telephone            = {user.telephone},
+    mobile               = {user.mobile},
+    username             = {user.username},
+    password             = {user.password},
+    status               = {user.status},
+    userPriviledgeCode   = {user.userPriviledgeCode}
+;
+\g
+
+commit;
+\g

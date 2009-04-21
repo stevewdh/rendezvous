@@ -33,6 +33,8 @@
                 <prop key="/editbuilding.htm"   >EditBuildingController</prop>
                 <prop key="/editfloor.htm"      >EditFloorController</prop>
                 <prop key="/editroom.htm"       >EditRoomController</prop>
+                <prop key="/listusers.htm"      >ListUsersController</prop>
+                <prop key="/edituser.htm"       >EditUserController</prop>
             </props>
         </property>
     </bean>
@@ -119,6 +121,17 @@
     </bean>
 	<bean name="EditRoomValidator"   class="com.inverse2.rendezvous.validators.RoomValidator"/>
     
+    <bean name="ListUsersController"  class="com.inverse2.rendezvous.controller.ListUsersController"/>
+    
+    <bean name="EditUserController"  class="com.inverse2.rendezvous.controller.EditUserController">
+		<property name="sessionForm"  value="true"/>
+		<property name="commandClass" value="com.inverse2.rendezvous.model.User"/>
+		<property name="formView"     value="edituser"/>
+ 		<property name="validator"><ref bean="EditUserValidator"/></property>
+		<property name="successView"  value="redirect:edituser.htm"/>
+        <property name="applicationContextManager"><ref bean="applicationContextManager"/></property>
+    </bean>
+	<bean name="EditUserValidator"   class="com.inverse2.rendezvous.validators.UserValidator"/>
     
     
     
